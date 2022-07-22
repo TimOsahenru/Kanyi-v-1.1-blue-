@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="header">
+    <div>
+        <h1>Hello {{request.user|title}}</h1>
+        <h3>You have <i>{{count}}</i> incomplete task{{count|pluralize:'s'}}</h3>
+    </div>
+
+{% if request.user %}
+<a href="{% url 'logout' %}">Logout</a>
+
+{% else %}
+<a href="{% url 'login' %}">Login</a>
+{% endif %}
+    </div>
+<hr>
+
+
+<div class="search-wrapper">
+      <form method="GET" style="margin-top: 20px; display: flex;">
+    <input type="search" name="search_area" value="{{search_input}}" placeholder="Search task...">
+</form>
+    <a id="add" href="{% url 'taskcreate' %}">&#x2b;</a>
+</div>
+
+<div class="todo-list">
+
+    {% for task in tasks %}
+    <div class="item-row">
+        {% if task.completed %}
+        <span><strike>{{task.title}}</strike></span>
+        {% else %}
+        <span>{{task.title}}</span>
+        {% endif %}
+        <div class="task-links">
+            <a href="{% url 'taskdetail' task.id %}">More</a>
+        <a href="{% url 'taskedit' task.id %}">Edit</a>
+        <a class="close" href="{% url 'taskdelete' task.id %}">Delete</a>
+        </div>
+    </div>
+    {% empty %}
+    <div class="item-row">
+        <span>Add task</span>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

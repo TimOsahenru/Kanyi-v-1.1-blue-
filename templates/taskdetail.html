@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="header">
+    <a href="/">&#8592; back</a>
+</div>
+
+<div class="card-body-detail">
+    <h5>{{task.description}}</h5>
+
+{% if task.completed %}
+<h5 style="color: #36454F;">Status: Task completed</h5>
+{% else %}
+<h5 style="color: #36454F;">Status: Task not completed</h5>
+{% endif %}
+
+<h4>Created at: {{task.create_at|timesince}}</h4>
+</div>
+
+{% endblock content %}
